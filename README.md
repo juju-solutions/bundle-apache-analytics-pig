@@ -13,12 +13,11 @@ Hadoop components, it contains the following units:
 ## Usage
 Deploy this bundle using juju-quickstart:
 
-    juju quickstart <bundle>
+    juju quickstart u/bigdata-dev/apache-analytics-pig
 
-See `juju quickstart --help` for ways to specify the `<bundle>` argument.
-Alternatively, you may deploy this bundle using juju-deployer:
-
-    juju deployer -c </path/to/bundles.yaml> apache-analytics-pig
+See `juju quickstart --help` for deployment options, including machine 
+constraints and how to deploy a locally modified version of the
+apache-analytics-pig bundle.yaml.
 
 ### Smoke test HDFS admin functionality
 Once the deployment is complete and the cluster is running, ssh to the HDFS
