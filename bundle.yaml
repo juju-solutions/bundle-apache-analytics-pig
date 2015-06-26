@@ -5,21 +5,21 @@ services:
     annotations:
       gui-x: "300"
       gui-y: "200"
-    constraints: mem=4G
+    constraints: mem=3G
   hdfs-master:
     charm: cs:~bigdata-dev/trusty/apache-hadoop-hdfs-master
     num_units: 1
     annotations:
       gui-x: "600"
       gui-y: "350"
-    constraints: mem=8G
+    constraints: mem=7G
   pig:
     charm: cs:~bigdata-dev/trusty/apache-pig
     num_units: 1
     annotations:
       gui-x: "1200"
       gui-y: "200"
-    constraints: mem=4G
+    constraints: mem=3G
   plugin:
     charm: cs:~bigdata-dev/trusty/apache-hadoop-plugin
     annotations:
@@ -31,14 +31,14 @@ services:
     annotations:
       gui-x: "600"
       gui-y: "600"
-    constraints: mem=8G
+    constraints: mem=7G
   yarn-master:
     charm: cs:~bigdata-dev/trusty/apache-hadoop-yarn-master
     num_units: 1
     annotations:
       gui-x: "600"
       gui-y: "100"
-    constraints: mem=8G
+    constraints: mem=7G
 series: trusty
 relations:
   - [yarn-master, hdfs-master]
