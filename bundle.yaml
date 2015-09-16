@@ -1,39 +1,39 @@
 services:
   compute-slave:
-    charm: cs:trusty/apache-hadoop-compute-slave
+    charm: cs:trusty/apache-hadoop-compute-slave-8
     num_units: 3
     annotations:
       gui-x: "300"
       gui-y: "200"
     constraints: mem=3G
   hdfs-master:
-    charm: cs:trusty/apache-hadoop-hdfs-master
+    charm: cs:trusty/apache-hadoop-hdfs-master-8
     num_units: 1
     annotations:
       gui-x: "600"
       gui-y: "350"
     constraints: mem=7G
   pig:
-    charm: cs:trusty/apache-pig
+    charm: cs:trusty/apache-pig-6
     num_units: 1
     annotations:
       gui-x: "1200"
       gui-y: "200"
     constraints: mem=3G
   plugin:
-    charm: cs:trusty/apache-hadoop-plugin
+    charm: cs:trusty/apache-hadoop-plugin-7
     annotations:
       gui-x: "900"
       gui-y: "200"
   secondary-namenode:
-    charm: cs:trusty/apache-hadoop-hdfs-secondary
+    charm: cs:trusty/apache-hadoop-hdfs-secondary-6
     num_units: 1
     annotations:
       gui-x: "600"
       gui-y: "600"
     constraints: mem=7G
   yarn-master:
-    charm: cs:trusty/apache-hadoop-yarn-master
+    charm: cs:trusty/apache-hadoop-yarn-master-6
     num_units: 1
     annotations:
       gui-x: "600"
