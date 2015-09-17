@@ -14,7 +14,7 @@ Hadoop components, it contains the following units:
 ## Usage
 Deploy this bundle using juju-quickstart:
 
-    juju quickstart u/bigdata-dev/apache-analytics-pig
+    juju quickstart apache-analytics-pig
 
 See `juju quickstart --help` for deployment options, including machine 
 constraints and how to deploy a locally modified version of the
