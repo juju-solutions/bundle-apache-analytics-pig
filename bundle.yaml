@@ -1,50 +1,42 @@
 services:
-  compute-slave:
-    charm: cs:trusty/apache-hadoop-compute-slave-8
-    num_units: 3
-    annotations:
-      gui-x: "300"
-      gui-y: "200"
-    constraints: mem=3G
-  hdfs-master:
-    charm: cs:trusty/apache-hadoop-hdfs-master-8
+  namenode:
+    charm: cs:~bigdata-dev/trusty/apache-hadoop-namenode-4
     num_units: 1
     annotations:
       gui-x: "600"
       gui-y: "350"
     constraints: mem=7G
-  pig:
-    charm: cs:trusty/apache-pig-6
-    num_units: 1
-    annotations:
-      gui-x: "1200"
-      gui-y: "200"
-    constraints: mem=3G
-  plugin:
-    charm: cs:trusty/apache-hadoop-plugin-7
-    annotations:
-      gui-x: "900"
-      gui-y: "200"
-  secondary-namenode:
-    charm: cs:trusty/apache-hadoop-hdfs-secondary-6
-    num_units: 1
-    annotations:
-      gui-x: "600"
-      gui-y: "600"
-    constraints: mem=7G
-  yarn-master:
-    charm: cs:trusty/apache-hadoop-yarn-master-6
+  resourcemanager:
+    charm: cs:~bigdata-dev/trusty/apache-hadoop-resourcemanager-5
     num_units: 1
     annotations:
       gui-x: "600"
       gui-y: "100"
     constraints: mem=7G
+  slave:
+    charm: cs:~bigdata-dev/trusty/apache-hadoop-slave-4
+    num_units: 3
+    annotations:
+      gui-x: "250"
+      gui-y: "200"
+    constraints: mem=7G
+  plugin:
+    charm: cs:~bigdata-dev/trusty/apache-hadoop-plugin-65
+    annotations:
+      gui-x: "950"
+      gui-y: "200"
+  pig:
+    charm: cs:~bigdata-dev/trusty/apache-pig
+    num_units: 1
+    annotations:
+      gui-x: "1200"
+      gui-y: "200"
+    constraints: mem=3G
 series: trusty
 relations:
-  - [yarn-master, hdfs-master]
-  - [secondary-namenode, hdfs-master]
-  - [compute-slave, yarn-master]
-  - [compute-slave, hdfs-master]
-  - [plugin, yarn-master]
-  - [plugin, hdfs-master]
+  - [namenode, slave]
+  - [resourcemanager, slave]
+  - [resourcemanager, namenode]
+  - [plugin, namenode]
+  - [plugin, resourcemanager]
   - [pig, plugin]
