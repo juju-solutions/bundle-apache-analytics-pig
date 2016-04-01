@@ -63,8 +63,9 @@ class TestBundle(unittest.TestCase):
         unit_name = self.hdfs.info['unit_name']
         uuid = self.d.action_do(unit_name, 'smoke-test')
         result = self.d.action_fetch(uuid)
+        # hdfs smoke-test sets outcome=success on success
         if (result['outcome'] != "success"):
-            error = "HDFS smoke-test failed: %s" % result['output']
+            error = "HDFS smoke-test failed"
             amulet.raise_status(amulet.FAIL, msg=error)
 
     def test_yarn_mapreduce_exe(self):
@@ -72,8 +73,8 @@ class TestBundle(unittest.TestCase):
         unit_name = self.yarn.info['unit_name']
         uuid = self.d.action_do(unit_name, 'smoke-test')
         result = self.d.action_fetch(uuid)
-        # yarn smoke-test is hot garbage and only returns results on failure,
-        # so if result isn't empty, the test has failed and has a 'log' key.
+        # yarn smoke-test only returns results on failure; if result is not
+        # empty, the test has failed and has a 'log' key
         if result:
             error = "YARN smoke-test failed: %s" % result['log']
             amulet.raise_status(amulet.FAIL, msg=error)
@@ -83,7 +84,9 @@ class TestBundle(unittest.TestCase):
         unit_name = self.pig.info['unit_name']
         uuid = self.d.action_do(unit_name, 'smoke-test')
         result = self.d.action_fetch(uuid)
-        if (result['outcome'] != "success"):
+        # pig smoke-test only returns results on failure; if result is not
+        # empty, the test has failed and has an 'output' key
+        if result:
             error = "Pig smoke-test failed: %s" % result['output']
             amulet.raise_status(amulet.FAIL, msg=error)
 
