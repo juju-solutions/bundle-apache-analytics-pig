@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import amulet
-import json
 import os
 import unittest
 import yaml
@@ -61,33 +60,32 @@ class TestBundle(unittest.TestCase):
 
     def test_hdfs_dir(self):
         """Smoke test validates mkdir, ls, chmod, and rm on the hdfs cluster."""
-        uuid = self.d.action_do(self.hdfs['unit_name'], 'smoke-test')
-        result = json.loads(self.d.action_fetch(uuid))
-        if (result['status'] != "completed"):
+        unit_name = self.hdfs.info['unit_name']
+        uuid = self.d.action_do(unit_name, 'smoke-test')
+        result = self.d.action_fetch(uuid)
+        if (result['outcome'] != "success"):
             error = "HDFS smoke-test failed: %s" % result['output']
             amulet.raise_status(amulet.FAIL, msg=error)
-        else:
-            amulet.raise_status(amulet.PASS, msg="HDFS smoke-test successful")
 
     def test_yarn_mapreduce_exe(self):
         """Smoke test validates teragen/terasort."""
-        uuid = self.d.action_do(self.yarn['unit_name'], 'smoke-test')
-        result = json.loads(self.d.action_fetch(uuid))
-        if (result['status'] != "completed"):
-            error = "YARN smoke-test failed: %s" % result['output']
+        unit_name = self.yarn.info['unit_name']
+        uuid = self.d.action_do(unit_name, 'smoke-test')
+        result = self.d.action_fetch(uuid)
+        # yarn smoke-test is hot garbage and only returns results on failure,
+        # so if result isn't empty, the test has failed and has a 'log' key.
+        if result:
+            error = "YARN smoke-test failed: %s" % result['log']
             amulet.raise_status(amulet.FAIL, msg=error)
-        else:
-            amulet.raise_status(amulet.PASS, msg="YARN smoke-test successful")
 
     def test_pig(self):
         """Smoke test validates Pig with a simple /etc/passwd script."""
-        uuid = self.d.action_do(self.pig['unit_name'], 'smoke-test')
-        result = json.loads(self.d.action_fetch(uuid))
-        if (result['status'] != "completed"):
+        unit_name = self.pig.info['unit_name']
+        uuid = self.d.action_do(unit_name, 'smoke-test')
+        result = self.d.action_fetch(uuid)
+        if (result['outcome'] != "success"):
             error = "Pig smoke-test failed: %s" % result['output']
             amulet.raise_status(amulet.FAIL, msg=error)
-        else:
-            amulet.raise_status(amulet.PASS, msg="Pig smoke-test successful")
 
 
 if __name__ == '__main__':
